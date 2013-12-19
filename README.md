@@ -1,6 +1,8 @@
 ELActionCell
 ============
 
+An exact copy of the Mail.app cell behavior.
+
 ![](Demo.gif?raw=true)
 
 Requirements

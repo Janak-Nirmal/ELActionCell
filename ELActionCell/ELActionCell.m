@@ -10,13 +10,13 @@
 
 #define BUTTON_WIDTH 74.0
 
-@interface MailCellScrollView : UIScrollView
+@interface ELActionCellScrollView : UIScrollView
 
 @property (nonatomic, weak) ELActionCell *cell;
 
 @end
 
-@implementation MailCellScrollView
+@implementation ELActionCellScrollView
 
 - (BOOL)shouldDismissEditedCell
 {
@@ -114,7 +114,7 @@
     UIView *contentView = self.contentView;
     
     // scroll view
-    MailCellScrollView *scrollView = [[MailCellScrollView alloc] initWithFrame:self.contentView.bounds];
+    ELActionCellScrollView *scrollView = [[ELActionCellScrollView alloc] initWithFrame:self.contentView.bounds];
     scrollView.cell = self;
     scrollView.showsHorizontalScrollIndicator =
     scrollView.showsVerticalScrollIndicator = NO;
@@ -141,7 +141,7 @@
     [self.scrollView.superview insertSubview:destructiveButton belowSubview:self.scrollView];
     _destructiveButton = destructiveButton;
     
-    // more button
+    // other button
     UIButton *otherButton = [[UIButton alloc] initWithFrame:CGRectOffset(self.destructiveButton.frame, -BUTTON_WIDTH, 0)];
     [otherButton setTitle:@"More" forState:UIControlStateNormal];
     otherButton.titleLabel.font = [UIFont systemFontOfSize:16.0];
@@ -194,7 +194,6 @@
 - (void)setTableViewObservationEnabled:(BOOL)enabled
 {
     UITableView *tableView = [self tableView];
-    NSAssert(tableView != nil, @"Call %@ must be descendant of UITableView", self);
     
     if (enabled)
         [tableView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentOffset)) options:0 context:NULL];
@@ -211,8 +210,7 @@
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             [cell setEditing:NO animated:YES];
         }
-    } else
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 #pragma mark - Editing the Cell
@@ -227,6 +225,7 @@
     if (!animated)
         return;
 
+    // reset gesture recognizers session
     UITableView *tableView = [self tableView];
     tableView.panGestureRecognizer.enabled = NO;
     tableView.panGestureRecognizer.enabled = YES;
