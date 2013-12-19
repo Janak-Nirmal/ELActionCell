@@ -1,6 +1,8 @@
 ELActionCell
 ============
 
+![](Demo.gif?raw=true)
+
 Requirements
 ------------
 
