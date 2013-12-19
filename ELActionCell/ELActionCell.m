@@ -1,6 +1,6 @@
 //
-//  MailCell.m
-//  MailCell
+//  ELActionCell.m
+//  ELActionCell
 //
 //  Created by Dmitry Nesterenko on 19.12.13.
 //  Copyright (c) 2013 e-legion. All rights reserved.
@@ -18,7 +18,7 @@
 
 @implementation ELActionCellScrollView
 
-- (BOOL)shouldDismissEditedCell
+- (BOOL)editingCellShouldDismiss
 {
     UITableView *tableView = [self.cell performSelector:@selector(tableView)];
     
@@ -41,7 +41,7 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    return [self shouldDismissEditedCell] == NO;
+    return [self editingCellShouldDismiss] == NO;
 }
 
 #pragma mark - Responding to Touch Events
@@ -51,7 +51,7 @@
     [super touchesBegan:touches withEvent:event];
 
     if (!self.cell.isEditing) {
-        if ([self shouldDismissEditedCell] == NO)
+        if ([self editingCellShouldDismiss] == NO)
             [self.cell touchesBegan:touches withEvent:event];
     }
 }
@@ -91,9 +91,9 @@
 
 #pragma mark - Initialization
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self initialize];
     }
@@ -205,7 +205,7 @@
 {
     if ([object isKindOfClass:[UITableView class]] && [keyPath isEqualToString:NSStringFromSelector(@selector(contentOffset))]) {
         UITableView *tableView = object;
-        NSIndexPath *indexPath = [tableView indexPathForEditedCell];
+        NSIndexPath *indexPath = [tableView indexPathForEditingCell];
         if (indexPath != nil) {
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             [cell setEditing:NO animated:YES];

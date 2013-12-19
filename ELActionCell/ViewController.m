@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "ELActionCell.h"
 
-@interface ViewController () <ELMailCellDelegate, UIActionSheetDelegate>
+@interface ViewController () <ELActionCellDelegate, UIActionSheetDelegate>
 
 @end
 
@@ -43,7 +43,7 @@
     if (buttonIndex == actionSheet.cancelButtonIndex)
         return;
 
-    NSIndexPath *indexPath = [self.tableView indexPathForEditedCell];
+    NSIndexPath *indexPath = [self.tableView indexPathForEditingCell];
     NSAssert(indexPath, @"Table must have cell in editing mode");
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     [cell setEditing:NO animated:YES];

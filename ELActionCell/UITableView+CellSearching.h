@@ -1,6 +1,6 @@
 //
 //  UITableView+CellSearching.h
-//  MailCell
+//  ELActionCell
 //
 //  Created by Dmitry Nesterenko on 19.12.13.
 //  Copyright (c) 2013 e-legion. All rights reserved.
@@ -10,6 +10,6 @@
 
 @interface UITableView (CellSearching)
 
-- (NSIndexPath *)indexPathForEditedCell;
+- (NSIndexPath *)indexPathForEditingCell;
 
 @end
