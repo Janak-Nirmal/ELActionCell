@@ -77,7 +77,7 @@
 
 @end
 
-@interface ELActionCell () <UIScrollViewDelegate>
+@interface ELActionCell () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 // views
 @property (nonatomic, weak) UIScrollView *scrollView;
@@ -130,6 +130,7 @@
     // tap gesture
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizerStateDidChange:)];
     tap.cancelsTouchesInView = NO;
+    tap.delegate = self;
     [self.scrollView addGestureRecognizer:tap];
     
     // delete button
@@ -325,6 +326,12 @@
         else if (CGRectContainsPoint(self.destructiveButton.bounds, [gestureRecognizer locationInView:self.destructiveButton]))
             [self.delegate tableView:tableView didTapButtonAtIndex:1 forCell:self atIndexPath:indexPath];
     }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    // allow button tapping while scrolling
+    return ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] || [otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) && (gestureRecognizer.view == self.scrollView || otherGestureRecognizer.view == self.scrollView);
 }
 
 @end
